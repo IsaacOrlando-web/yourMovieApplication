@@ -1,0 +1,163 @@
+[
+  {
+    "_id": {
+      "$oid": "66a01e4d5f1b2a001a2b3c4d"
+    },
+    "title": "The Gold Rush",
+    "description": "A lone prospector ventures into Alaska looking for gold. He gets mixed up with a burly prospector and falls in love with the beautiful Georgia. This classic comedy-drama is one of Chaplin's most celebrated films, featuring iconic scenes like the 'dinner roll dance'.",
+    "genre": ["Comedy", "Adventure", "Drama"],
+    "releaseYear": 1925,
+    "director": "Charlie Chaplin",
+    "duration": 95,
+    "rating": 8.2,
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/The_Gold_Rush_%281925_poster%29.jpg",
+    "trailerUrl": "https://archive.org/details/TheGoldRush_56",
+    "cast": ["Charlie Chaplin", "Mack Swain", "Tom Murray", "Georgia Hale"],
+    "language": "English (Silent with Intertitles)",
+    "country": "United States",
+    "addedDate": {
+      "$date": "2026-02-04T10:00:00Z"
+    },
+    "views": 850000,
+    "isPopular": true,
+    "copyrightStatus": "Public Domain"
+  },
+  {
+    "_id": {
+      "$oid": "66a01e4d5f1b2a001a2b3c4e"
+    },
+    "title": "The Circus",
+    "description": "The Little Tramp finds himself working at a circus where his unintentional comedic antics make him the star of the show, all while he falls for the ringmaster's daughter.",
+    "genre": ["Comedy", "Romance"],
+    "releaseYear": 1928,
+    "director": "Charlie Chaplin",
+    "duration": 72,
+    "rating": 8.0,
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/en/c/c7/The_Circus_1928.jpg",
+    "trailerUrl": "https://archive.org/details/TheCircus1928",
+    "cast": ["Charlie Chaplin", "Merna Kennedy", "Al Ernest Garcia"],
+    "language": "English (Silent with Intertitles)",
+    "country": "United States",
+    "addedDate": {
+      "$date": "2026-02-04T10:05:00Z"
+    },
+    "views": 420000,
+    "isPopular": false,
+    "copyrightStatus": "Public Domain"
+  },
+  {
+    "_id": {
+      "$oid": "66a01e4d5f1b2a001a2b3c4f"
+    },
+    "title": "The Kid",
+    "description": "Chaplin's first full-length film. The Tramp cares for an abandoned child, forging a heartwarming and comedic partnership that stands the test of time.",
+    "genre": ["Comedy", "Drama", "Family"],
+    "releaseYear": 1921,
+    "director": "Charlie Chaplin",
+    "duration": 68,
+    "rating": 8.3,
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5c/The_Kid_%281921%29.jpg",
+    "trailerUrl": "https://archive.org/details/TheKid1921",
+    "cast": ["Charlie Chaplin", "Jackie Coogan", "Edna Purviance"],
+    "language": "English (Silent with Intertitles)",
+    "country": "United States",
+    "addedDate": {
+      "$date": "2026-02-04T10:10:00Z"
+    },
+    "views": 780000,
+    "isPopular": true,
+    "copyrightStatus": "Public Domain"
+  },
+  {
+    "_id": {
+      "$oid": "66a01e4d5f1b2a001a2b3c50"
+    },
+    "title": "A Dog's Life",
+    "description": "The Tramp and his scruffy dog, Scraps, navigate the hardships of city life, stealing food and dreaming of a better future in this poignant short film.",
+    "genre": ["Comedy", "Drama"],
+    "releaseYear": 1918,
+    "director": "Charlie Chaplin",
+    "duration": 33,
+    "rating": 7.8,
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b6/A_Dog%27s_Life_1918_poster.jpg",
+    "trailerUrl": "https://archive.org/details/ADogsLife1918",
+    "cast": ["Charlie Chaplin", "Edna Purviance", "Syd Chaplin"],
+    "language": "English (Silent with Intertitles)",
+    "country": "United States",
+    "addedDate": {
+      "$date": "2026-02-04T10:15:00Z"
+    },
+    "views": 310000,
+    "isPopular": false,
+    "copyrightStatus": "Public Domain"
+  },
+  {
+    "_id": {
+      "$oid": "66a01e4d5f1b2a001a2b3c51"
+    },
+    "title": "Metropolis",
+    "description": "In a futuristic city sharply divided between the working class and the city planners, the son of the city's mastermind falls in love with a working-class prophet who predicts the coming of a savior.",
+    "genre": ["Sci-Fi", "Drama"],
+    "releaseYear": 1927,
+    "director": "Fritz Lang",
+    "duration": 153,
+    "rating": 8.3,
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/en/0/06/Metropolisposter.jpg",
+    "trailerUrl": "https://archive.org/details/Metropolis1927Restored",
+    "cast": ["Alfred Abel", "Gustav Fröhlich", "Brigitte Helm"],
+    "language": "German (Silent with Intertitles)",
+    "country": "Germany",
+    "addedDate": {
+      "$date": "2026-02-04T10:20:00Z"
+    },
+    "views": 950000,
+    "isPopular": true,
+    "copyrightStatus": "Public Domain"
+  },
+  {
+    "_id": {
+      "$oid": "66a01e4d5f1b2a001a2b3c52"
+    },
+    "title": "Nosferatu",
+    "description": "A classic and eerie silent film. Count Orlok, a mysterious vampire from Transylvania, summons a real estate agent to his remote castle, then becomes obsessed with the agent's wife.",
+    "genre": ["Horror", "Fantasy"],
+    "releaseYear": 1922,
+    "director": "F. W. Murnau",
+    "duration": 94,
+    "rating": 7.9,
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/en/1/11/Nosferatuposter.jpg",
+    "trailerUrl": "https://archive.org/details/Nosferatu1922",
+    "cast": ["Max Schreck", "Gustav von Wangenheim", "Greta Schröder"],
+    "language": "German (Silent with Intertitles)",
+    "country": "Germany",
+    "addedDate": {
+      "$date": "2026-02-04T10:25:00Z"
+    },
+    "views": 880000,
+    "isPopular": true,
+    "copyrightStatus": "Public Domain"
+  },
+  {
+    "_id": {
+      "$oid": "66a01e4d5f1b2a001a2b3c53"
+    },
+    "title": "The General",
+    "description": "During the American Civil War, a Confederate railroad engineer pursues his stolen locomotive 'The General' and rescues his kidnapped love in this masterpiece of silent comedy and action.",
+    "genre": ["Action", "Adventure", "Comedy"],
+    "releaseYear": 1926,
+    "director": "Buster Keaton",
+    "duration": 78,
+    "rating": 8.1,
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/The_General_1926_poster.jpg",
+    "trailerUrl": "https://archive.org/details/TheGeneral1926",
+    "cast": ["Buster Keaton", "Marion Mack", "Glen Cavender"],
+    "language": "English (Silent with Intertitles)",
+    "country": "United States",
+    "addedDate": {
+      "$date": "2026-02-04T10:30:00Z"
+    },
+    "views": 720000,
+    "isPopular": false,
+    "copyrightStatus": "Public Domain"
+  }
+]
