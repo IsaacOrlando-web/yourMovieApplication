@@ -1,0 +1,24 @@
+{
+  "name": "yourmovieapplication",
+  "version": "1.0.0",
+  "description": "🎬 Movie API\r A secure RESTful API for movie catalog and reviews with OAuth2 authentication.",
+  "homepage": "https://github.com/IsaacOrlando-web/yourMovieApplication#readme",
+  "bugs": {
+    "url": "https://github.com/IsaacOrlando-web/yourMovieApplication/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsaacOrlando-web/yourMovieApplication.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
