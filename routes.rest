@@ -1,0 +1,26 @@
+GET http://localhost:3000/movies/
+
+### Get Single movie by ID
+GET http://localhost:3000/movies/66a01e4d5f1b2a001a2b3c4d
+
+### Add a new movie
+POST http://localhost:3000/movies/ HTTP/1.1 
+Content-Type: application/json
+
+{
+  "title": "City Lights",
+  "description": "The Little Tramp falls in love with a blind flower girl and works to raise money for an operation that will restore her sight.",
+  "genre": ["Comedy", "Drama", "Romance"],
+  "releaseYear": 1931,
+  "director": "Charlie Chaplin",
+  "duration": 87,
+  "rating": 8.5,
+  "posterUrl": "https://upload.wikimedia.org/wikipedia/commons/0/09/City_Lights_%281931_poster%29.jpg",
+  "trailerUrl": "https://archive.org/details/CityLights1931",
+  "cast": ["Charlie Chaplin", "Virginia Cherrill", "Florence Lee"],
+  "language": "English (Silent)",
+  "country": "United States",
+  "views": 920000,
+  "isPopular": true,
+  "copyrightStatus": "Public Domain"
+}
