@@ -4,7 +4,7 @@ dotenv.config();
 
 const databaseUser = process.env.DATABASE_USER;
 const dbPassword = process.env.DATABASE_PASSWORD;
-const uri = `mongodb+srv://${databaseUser}:${dbPassword}@cluster0.6nmbwol.mongodb.net/?appName=Cluster0`;
+const uri = `mongodb+srv://${databaseUser}:${dbPassword}@cluster0.gkt5des.mongodb.net/`;
 const client = new MongoClient(uri);
 
 let database;

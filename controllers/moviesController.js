@@ -81,4 +81,17 @@ const addMovie = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies, getSingleMovie, addMovie };
+const deleteMovie = async (req, res) => {
+    try {
+        const movieId = new ObjectId(req.params.id);
+        const response = await mongodb.getDatabase().collection('movies').deleteOne({ _id: movieId });
+
+        if (response.deletedCount > 0) {
+        res.status(204).send();
+        } 
+    } catch (err) {
+        res.status(500).json(err.message || 'Some error occurred while deleting the movies.');
+    }
+}
+
+module.exports = { getAllMovies, getSingleMovie, addMovie, deleteMovie };
