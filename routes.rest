@@ -24,3 +24,9 @@ Content-Type: application/json
   "isPopular": true,
   "copyrightStatus": "Public Domain"
 }
+
+### GET mostPopular all movies
+GET http://localhost:3000/most-popular/
+
+###GET mostpopular Single movie by ID
+GET http://localhost:3000/most-popular/66a01e4d5f1b2a001a2b3c52

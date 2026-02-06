@@ -20,7 +20,23 @@ const getSinglePopular = async (req, res) => {
     try {
         const movieId = req.params.id;
         await mongodb.initDB();
-        const result = await mongodb.getDatabase().collection('mostpopular').findOne({ _id: movieId });
+        const collection = mongodb.getDatabase().collection('mostpopular');
+        let result = null;
+
+        if (ObjectId.isValid(movieId)) {
+            try {
+                result = await collection.findOne({ _id: new ObjectId(movieId) });
+            } catch (e) {
+                result = null;
+            }
+            if (!result) {
+                // fallback: maybe _id is stored as a string in some documents
+                result = await collection.findOne({ _id: movieId });
+            }
+        } else {
+            result = await collection.findOne({ _id: movieId });
+        }
+        
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(result);
     } catch (error) {
