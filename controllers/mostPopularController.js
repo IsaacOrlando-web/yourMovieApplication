@@ -28,4 +28,17 @@ const getSinglePopular = async (req, res) => {
     }
 };
 
-module.exports = { getAllPopular, getSinglePopular };
+const deletePopular = async (req, res) => {
+    try {
+        const movieId = new ObjectId(req.params.id);
+        const response = await mongodb.getDatabase().db().collection('mostpopular').deleteOne({ _id: movieId });
+
+        if (response.deletedCount > 0) {
+        res.status(204).send();
+        } 
+    } catch (err) {
+        res.status(500).json(response.error || 'Some error occurred while deleting the movie.');
+    }
+}
+
+module.exports = { getAllPopular, getSinglePopular, deletePopular };
