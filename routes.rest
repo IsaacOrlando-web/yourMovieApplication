@@ -1,7 +1,7 @@
 GET http://localhost:3000/movies/
 
 ### Get Single movie by ID
-GET http://localhost:3000/movies/66a01e4d5f1b2a001a2b3c4d
+GET http://localhost:3000/movies/6985dd1547d61f96d1e994c5
 
 ### Add a new movie
 POST http://localhost:3000/movies/ HTTP/1.1 

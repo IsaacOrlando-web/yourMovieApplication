@@ -22,10 +22,30 @@ const getSingleMovie = async (req, res) => {
         const movieId = req.params.id;
         console.log(movieId);
         await mongodb.initDB();
-        const result = await mongodb.getDatabase().collection('movies').findOne({ _id: movieId });
+        const collection = mongodb.getDatabase().collection('movies');
+        let result = null;
+
+        if (ObjectId.isValid(movieId)) {
+            try {
+                result = await collection.findOne({ _id: new ObjectId(movieId) });
+            } catch (e) {
+                result = null;
+            }
+            if (!result) {
+                // fallback: maybe _id is stored as a string in some documents
+                result = await collection.findOne({ _id: movieId });
+            }
+        } else {
+            result = await collection.findOne({ _id: movieId });
+        }
+
         console.log(result);
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(result);
+        if (!result) {
+            res.status(404).json({ message: "Movie not found" });
+        } else {
+            res.status(200).json(result);
+        }
     } catch (error) {
         res.status(500).json({ message: "Error retrieving movie", error: error.message });
     }
