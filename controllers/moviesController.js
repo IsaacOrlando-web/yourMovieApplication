@@ -81,8 +81,45 @@ const addMovie = async (req, res) => {
     }
 };
 
+const updateMovie = async (req, res) => {
+    try {
+        await mongodb.initDB();
+
+        const movieId = req.params.id;
+
+        const movie = {
+            title: req.body.title,
+            description: req.body.description,
+            genre: req.body.genre,
+            releaseYear: req.body.releaseYear,
+            director: req.body.director,
+            duration: req.body.duration,
+            rating: req.body.rating,
+            posterUrl: req.body.posterUrl,
+            trailerUrl: req.body.trailerUrl,
+            cast: req.body.cast,
+            language: req.body.language,
+            country: req.body.country,
+            addedDate: req.body.addedDate,
+            views: req.body.views,
+            isPopular: req.body.isPopular,
+            copyrightStatus: req.body.copyrightStatus
+        }
+        const response = await mongodb.getDatabase().collection('movies').updateOne({ _id: movieId }, { $set: movie });
+
+        if (response.modifiedCount === 0) {
+            return res.status(404).json('Movie not found');
+        } 
+        res.status(204).send();
+
+    } catch (err) {
+        res.status(500).json(err.message || 'Some error occurred while updating the movie.');
+    }
+}
+
 const deleteMovie = async (req, res) => {
     try {
+        await mongodb.initDB();
         const movieId = new ObjectId(req.params.id);
         const response = await mongodb.getDatabase().collection('movies').deleteOne({ _id: movieId });
 
@@ -94,4 +131,4 @@ const deleteMovie = async (req, res) => {
     }
 }
 
-module.exports = { getAllMovies, getSingleMovie, addMovie, deleteMovie };
+module.exports = { getAllMovies, getSingleMovie, addMovie, updateMovie, deleteMovie };

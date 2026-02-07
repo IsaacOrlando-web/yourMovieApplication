@@ -6,5 +6,6 @@ const popularController = require('../controllers/mostPopularController');
 router.get('/', popularController.getAllPopular);
 router.get('/:id', popularController.getSinglePopular);
 router.delete('/:id', popularController.deletePopular);
+router.put('/:id', popularController.updatePopular);
 
 module.exports = router;
