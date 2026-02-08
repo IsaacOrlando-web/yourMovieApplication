@@ -33,3 +33,28 @@ GET http://localhost:3000/most-popular/
 GET http://localhost:3000/most-popular/66a01e4d5f1b2a001a2b3c52
 =======
 >>>>>>> af4420eb3924355ca825b408fdbabaa437ebecf0
+
+
+### Add a new most popular movie
+POST http://localhost:3000/most-popular/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "movieId": "66a01e4d5f1b2a001a2b3c4e",
+  "title": "City Lights",
+  "description": "The Little Tramp finds himself working at a circus where his unintentional comedic antics make him the star of the show.",
+  "genre": ["Comedy", "Romance"],
+  "releaseYear": 1928,
+  "director": "Charlie Chaplin",
+  "duration": 72,
+  "rating": 8.0,
+  "posterUrl": "https://upload.wikimedia.org/wikipedia/en/c/c7/The_Circus_1928.jpg",
+  "trailerUrl": "https://archive.org/details/TheCircus1928",
+  "cast": ["Charlie Chaplin", "Merna Kennedy", "Al Ernest Garcia"],
+  "language": "English (Silent)",
+  "country": "United States",
+  "addedDate": "2024-01-15T10:05:00Z",
+  "views": 420000,
+  "isPopular": false,
+  "copyrightStatus": "Public Domain"
+}

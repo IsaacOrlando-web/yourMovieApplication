@@ -1,5 +1,7 @@
 const express = require('express');
 const mongodb = require('../db/database');
+const { title } = require('process');
+const { updateMovie } = require('./moviesController');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAllPopular = async (req, res) => {
@@ -44,41 +46,35 @@ const getSinglePopular = async (req, res) => {
     }
 };
 
-const updatePopular = async (req, res) => {
+const addPopular = async (req, res) => {
     try {
-        await mongodb.initDB();
-
-        const movieId = req.params.id;
-
-        const movie = {
-            title: req.body.title,
-            description: req.body.description,
-            genre: req.body.genre,
-            releaseYear: req.body.releaseYear,
-            director: req.body.director,
-            duration: req.body.duration,
-            rating: req.body.rating,
-            posterUrl: req.body.posterUrl,
-            trailerUrl: req.body.trailerUrl,
-            cast: req.body.cast,
-            language: req.body.language,
-            country: req.body.country,
-            addedDate: req.body.addedDate,
-            views: req.body.views,
-            isPopular: req.body.isPopular,
-            copyrightStatus: req.body.copyrightStatus
-        }
-        const response = await mongodb.getDatabase().collection('mostpopular').updateOne({ _id: movieId }, { $set: movie });
-
-        if (response.modifiedCount === 0) {
-            return res.status(404).json('Movie not found');
-        } 
-        res.status(204).send();
-
-    } catch (err) {
-        res.status(500).json(err.message || 'Some error occurred while updating the movie.');
+        const newPopular = {
+                movieId: req.body.movieId,
+                title: req.body.title,
+                description: req.body.description,
+                genre: req.body.genre,
+                releaseYear: req.body.releaseYear,
+                director: req.body.director,
+                duration: req.body.duration,
+                rating: req.body.rating,
+                posterUrl: req.body.posterUrl,
+                trailerUrl: req.body.trailerUrl,
+                cast: req.body.cast,
+                language: req.body.language,
+                country: req.body.country,
+                addedDate: req.body.addedDate,
+                views: req.body.views,
+                isPopular: req.body.isPopular,
+                copyrightStatus: req.body.copyrightStatus
+            };
+            await mongodb.initDB();
+            const result = await mongodb.getDatabase().collection('mostpopular').insertOne(newPopular);
+            res.setHeader('Content-Type', 'application/json');
+            res.status(201).json({ message: "Movie added to most popular", id: result.insertedId });
+        }catch(error){
+        res.status(500).json({ message: "Error adding movie", error: error.message });
     }
-}
+};
 
 const deletePopular = async (req, res) => {
     try {
@@ -93,4 +89,4 @@ const deletePopular = async (req, res) => {
     }
 }
 
-module.exports = { getAllPopular, getSinglePopular, deletePopular, updatePopular };
+module.exports = { getAllPopular, getSinglePopular, deletePopular, addPopular };

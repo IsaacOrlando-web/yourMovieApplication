@@ -53,7 +53,6 @@ const getSingleMovie = async (req, res) => {
 
 const addMovie = async (req, res) => {
     try {
-        console.log(req.body);
         const newMovie = {
             title: req.body.title,
             description: req.body.description,
