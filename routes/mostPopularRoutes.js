@@ -7,6 +7,6 @@ router.get('/', popularController.getAllPopular);
 router.post('/', popularController.addPopular);
 router.get('/:id', popularController.getSinglePopular);
 router.delete('/:id', popularController.deletePopular);
-//router.put('/:id', popularController.updatePopular);
+router.put('/:id', popularController.updatePopular);
 
 module.exports = router;
