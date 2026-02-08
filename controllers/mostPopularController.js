@@ -80,7 +80,7 @@ const updatePopular = async (req, res) => {
     try {
         await mongodb.initDB();
 
-        const movieId = req.params.id;
+        const movieId = new ObjectId(req.params.id);
 
         const movie = {
             title: req.body.title,
@@ -102,7 +102,7 @@ const updatePopular = async (req, res) => {
         }
         const response = await mongodb.getDatabase().collection('mostpopular').updateOne({ _id: movieId }, { $set: movie });
 
-        if (response.modifiedCount === 0) {
+        if (response.matchedCount === 0) {
             return res.status(404).json('Movie not found');
         } 
         res.status(204).send();
@@ -115,14 +115,15 @@ const updatePopular = async (req, res) => {
 
 const deletePopular = async (req, res) => {
     try {
+        await mongodb.initDB();
         const movieId = new ObjectId(req.params.id);
-        const response = await mongodb.getDatabase().db().collection('mostpopular').deleteOne({ _id: movieId });
+        const response = await mongodb.getDatabase().collection('mostpopular').deleteOne({ _id: movieId });
 
         if (response.deletedCount > 0) {
         res.status(204).send();
         } 
     } catch (err) {
-        res.status(500).json(response.error || 'Some error occurred while deleting the movie.');
+        res.status(500).json(err.message || 'Some error occurred while deleting the movie.');
     }
 }
 

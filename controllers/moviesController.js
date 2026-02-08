@@ -84,7 +84,7 @@ const updateMovie = async (req, res) => {
     try {
         await mongodb.initDB();
 
-        const movieId = req.params.id;
+        const movieId = new ObjectId(req.params.id);
 
         const movie = {
             title: req.body.title,
@@ -106,7 +106,7 @@ const updateMovie = async (req, res) => {
         }
         const response = await mongodb.getDatabase().collection('movies').updateOne({ _id: movieId }, { $set: movie });
 
-        if (response.modifiedCount === 0) {
+        if (response.matchedCount === 0) {
             return res.status(404).json('Movie not found');
         } 
         res.status(204).send();

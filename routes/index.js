@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.use('/most-popular', mostPopularRoutes);
 router.use('/movies', moviesRoute);
+router.use('/', require('./swagger'));
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
