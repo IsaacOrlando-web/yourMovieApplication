@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Contacts Api",
-    "description": "Contacts Api",
+    "title": "Movies API",
+    "description": "A RESTful API for managing movie collections and most popular movies.",
     "version": "1.0.0"
   },
   "host": "yourmovieapplication.onrender.com",
@@ -108,6 +108,9 @@
           "201": {
             "description": "Created"
           },
+          "400": {
+            "description": "Bad Request — missing required fields"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -132,6 +135,9 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -150,6 +156,12 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request — invalid ID format"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -226,6 +238,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request — missing required fields or invalid ID format"
           },
           "404": {
             "description": "Not Found"
@@ -319,6 +334,9 @@
           "201": {
             "description": "Created"
           },
+          "400": {
+            "description": "Bad Request — missing required fields"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -364,6 +382,12 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request — invalid ID format"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -440,6 +464,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request — missing required fields or invalid ID format"
           },
           "404": {
             "description": "Not Found"
