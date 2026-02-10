@@ -1,14 +1,11 @@
 const express = require('express');
+const router = express.Router();
+
 const mostPopularRoutes = require('./mostPopularRoutes');
 const moviesRoute = require('./moviesRoute');
-const app = express();
-const router = express.Router();
 
 router.use('/most-popular', mostPopularRoutes);
 router.use('/movies', moviesRoute);
 router.use('/', require('./swagger'));
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
 
 module.exports = router;

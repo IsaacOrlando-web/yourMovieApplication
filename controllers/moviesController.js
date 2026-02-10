@@ -1,27 +1,41 @@
-const express = require('express');
 const mongodb = require('../db/database');
 const ObjectId = require('mongodb').ObjectId;
 
+const REQUIRED_FIELDS = [
+    'title', 'description', 'genre', 'releaseYear', 'director',
+    'duration', 'rating', 'posterUrl', 'trailerUrl', 'cast',
+    'language', 'country', 'addedDate', 'views', 'isPopular', 'copyrightStatus'
+];
+
+/**
+ * Validates that all required fields are present in the request body.
+ * Returns an array of missing field names, or an empty array if valid.
+ */
+function validateMovieBody(body) {
+    return REQUIRED_FIELDS.filter((field) => body[field] === undefined || body[field] === null);
+}
+
+/**
+ * Validates that the given string is a valid MongoDB ObjectId.
+ */
+function isValidObjectId(id) {
+    return ObjectId.isValid(id) && String(new ObjectId(id)) === id;
+}
 
 const getAllMovies = async (req, res) => {
-    try{
-        await mongodb.initDB();
+    try {
         const result = await mongodb.getDatabase().collection('movies').find();
-        console.log(result);
-        result.toArray().then((movies) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(movies);
-        });
+        const movies = await result.toArray();
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(movies);
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving movies", error: error.message });
+        res.status(500).json({ message: 'Error retrieving movies', error: error.message });
     }
-}
+};
 
 const getSingleMovie = async (req, res) => {
     try {
         const movieId = req.params.id;
-        console.log(movieId);
-        await mongodb.initDB();
         const collection = mongodb.getDatabase().collection('movies');
         let result = null;
 
@@ -32,27 +46,33 @@ const getSingleMovie = async (req, res) => {
                 result = null;
             }
             if (!result) {
-                // fallback: maybe _id is stored as a string in some documents
+                // Fallback: _id may be stored as a plain string in some documents
                 result = await collection.findOne({ _id: movieId });
             }
         } else {
             result = await collection.findOne({ _id: movieId });
         }
 
-        console.log(result);
         res.setHeader('Content-Type', 'application/json');
         if (!result) {
-            res.status(404).json({ message: "Movie not found" });
-        } else {
-            res.status(200).json(result);
+            return res.status(404).json({ message: 'Movie not found' });
         }
+        res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving movie", error: error.message });
+        res.status(500).json({ message: 'Error retrieving movie', error: error.message });
     }
-}
+};
 
 const addMovie = async (req, res) => {
     try {
+        const missing = validateMovieBody(req.body);
+        if (missing.length > 0) {
+            return res.status(400).json({
+                message: 'Missing required fields',
+                missingFields: missing
+            });
+        }
+
         const newMovie = {
             title: req.body.title,
             description: req.body.description,
@@ -71,20 +91,29 @@ const addMovie = async (req, res) => {
             isPopular: req.body.isPopular,
             copyrightStatus: req.body.copyrightStatus
         };
-        await mongodb.initDB();
+
         const result = await mongodb.getDatabase().collection('movies').insertOne(newMovie);
         res.setHeader('Content-Type', 'application/json');
-        res.status(201).json({ message: "Movie added successfully", insertedId: result.insertedId });
-    } catch(error) {
-        res.status(500).json({ message: "Error adding movie", error: error.message });
+        res.status(201).json({ message: 'Movie added successfully', insertedId: result.insertedId });
+    } catch (error) {
+        res.status(500).json({ message: 'Error adding movie', error: error.message });
     }
 };
 
 const updateMovie = async (req, res) => {
     try {
-        await mongodb.initDB();
+        const movieId = req.params.id;
+        if (!isValidObjectId(movieId)) {
+            return res.status(400).json({ message: 'Invalid movie ID format' });
+        }
 
-        const movieId = new ObjectId(req.params.id);
+        const missing = validateMovieBody(req.body);
+        if (missing.length > 0) {
+            return res.status(400).json({
+                message: 'Missing required fields',
+                missingFields: missing
+            });
+        }
 
         const movie = {
             title: req.body.title,
@@ -103,31 +132,40 @@ const updateMovie = async (req, res) => {
             views: req.body.views,
             isPopular: req.body.isPopular,
             copyrightStatus: req.body.copyrightStatus
-        }
-        const response = await mongodb.getDatabase().collection('movies').updateOne({ _id: movieId }, { $set: movie });
+        };
+
+        const response = await mongodb.getDatabase().collection('movies').updateOne(
+            { _id: new ObjectId(movieId) },
+            { $set: movie }
+        );
 
         if (response.matchedCount === 0) {
-            return res.status(404).json('Movie not found');
-        } 
+            return res.status(404).json({ message: 'Movie not found' });
+        }
         res.status(204).send();
-
-    } catch (err) {
-        res.status(500).json(err.message || 'Some error occurred while updating the movie.');
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating movie', error: error.message });
     }
-}
+};
 
 const deleteMovie = async (req, res) => {
     try {
-        await mongodb.initDB();
-        const movieId = new ObjectId(req.params.id);
-        const response = await mongodb.getDatabase().collection('movies').deleteOne({ _id: movieId });
+        const movieId = req.params.id;
+        if (!isValidObjectId(movieId)) {
+            return res.status(400).json({ message: 'Invalid movie ID format' });
+        }
 
-        if (response.deletedCount > 0) {
+        const response = await mongodb.getDatabase().collection('movies').deleteOne(
+            { _id: new ObjectId(movieId) }
+        );
+
+        if (response.deletedCount === 0) {
+            return res.status(404).json({ message: 'Movie not found' });
+        }
         res.status(204).send();
-        } 
-    } catch (err) {
-        res.status(500).json(err.message || 'Some error occurred while deleting the movies.');
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting movie', error: error.message });
     }
-}
+};
 
 module.exports = { getAllMovies, getSingleMovie, addMovie, updateMovie, deleteMovie };

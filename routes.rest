@@ -25,15 +25,11 @@ Content-Type: application/json
   "copyrightStatus": "Public Domain"
 }
 
-<<<<<<< HEAD
 ### GET mostPopular all movies
 GET http://localhost:3000/most-popular/
 
-###GET mostpopular Single movie by ID
+### GET mostPopular Single movie by ID
 GET http://localhost:3000/most-popular/66a01e4d5f1b2a001a2b3c52
-=======
->>>>>>> af4420eb3924355ca825b408fdbabaa437ebecf0
-
 
 ### Add a new most popular movie
 POST http://localhost:3000/most-popular/ HTTP/1.1
