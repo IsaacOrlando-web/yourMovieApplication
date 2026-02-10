@@ -2,10 +2,7 @@ const { MongoClient } = require('mongodb');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const databaseUser = process.env.DATABASE_USER;
-const dbPassword = process.env.DATABASE_PASSWORD;
-const uri = `mongodb+srv://${databaseUser}:${dbPassword}@cluster0.6nmbwol.mongodb.net/?appName=Cluster0`;
-const client = new MongoClient(uri);
+const client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
 
 let database;
 
