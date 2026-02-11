@@ -30,4 +30,11 @@ function getDatabase() {
     return database;
 }
 
-module.exports = { initDB, getDatabase };
+async function closeDB() {
+    if (client) {
+        await client.close();
+        console.log('MongoDB connection closed');
+    }
+}
+
+module.exports = { initDB, getDatabase, closeDB };
