@@ -30,4 +30,4 @@ function getDatabase() {
     return database;
 }
 
-module.exports = { initDB, getDatabase };
+module.exports = { initDB, getDatabase, client };
