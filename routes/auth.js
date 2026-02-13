@@ -4,6 +4,14 @@ var router = express.Router();
 var GoogleStrategy = require('passport-google-oidc');
 var { getDatabase } = require('../db/database');
 
+
+router.get('/logout', function(req, res, next) {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+});
+
 router.get('/oauth2/redirect/google', (req, res, next) => {
   // Check for OAuth errors from Google
   if (req.query.error) {
@@ -14,6 +22,7 @@ router.get('/oauth2/redirect/google', (req, res, next) => {
     });
     return res.redirect('/login?error=' + encodeURIComponent(req.query.error) + '&error_description=' + encodeURIComponent(req.query.error_description || ''));
   }
+  
 
   passport.authenticate('google', (err, user, info) => {
     if (err) {
