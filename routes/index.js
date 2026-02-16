@@ -7,10 +7,6 @@ const moviesRoute = require('./moviesRoute');
 const commentsRoutes = require('./commentsRoutes');
 const usersRoutes = require('./usersRoutes');
 
-
-const commentsRoutes = require('./commentsRoutes');
-const usersRoutes = require('./usersRoutes');
-
 const authRouter = require('./auth');
 
 router.use('/', authRouter); // Auth routes
