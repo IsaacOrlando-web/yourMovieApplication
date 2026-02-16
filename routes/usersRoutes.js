@@ -29,3 +29,12 @@ router.delete('/:id', usersController.deleteUser);
 router.put('/:id', usersController.updateUser);
 
 module.exports = router;
+
+router.get('/', usersController.getAllUsers);
+router.post('/', usersController.addUser);
+router.get('/:id', usersController.getSingleUser);
+router.delete('/:id', usersController.deleteUser);
+router.put('/:id', usersController.updateUser);
+
+module.exports = router;
+

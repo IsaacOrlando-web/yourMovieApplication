@@ -1,35 +1,75 @@
-🎬 Movie API
-A secure RESTful API for movie catalog and reviews with OAuth2 authentication.
+# Movie API
 
-✨ Features
-OAuth2 Authentication - Secure user login
+A RESTful API for managing a movie catalog and tracking most popular movies. Built with Node.js, Express, and MongoDB.
 
-Movie Catalog - Browse, search, and manage movies
+## Features
 
-Personal Watchlists - Save favorites and watch-later lists
+- **Movie Management**: Create, read, update, and delete movies.
+- **Popular Movies**: Track and manage a collection of most popular movies.
+- **API Documentation**: Integrated Swagger UI for interactive API testing.
+- **Input Validation**: Robust validation for data integrity.
 
-Movie Reviews - Post and manage comments
+## Tech Stack
 
-Popular Tracking - Most-watched movie rankings
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: MongoDB (Native Driver)
+- **Documentation**: Swagger UI Express & Swagger Autogen
 
-🏗️ Tech Stack
-Backend: Node.js, Express
+## Getting Started
 
-Database: MongoDB with Mongoose
+### Prerequisites
 
-Auth: OAuth2 (Passport.js)
+- Node.js installed
+- MongoDB connection string (Atlas or local)
 
-Architecture: MVC pattern
+### Installation
 
-🗄️ Database
-Database: yourmovies
-Collections: users, movies, comments, mostpopular
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:IsaacOrlando-web/yourMovieApplication.git
+   cd yourMovieApplication
+   ```
 
-🔐 Security
-OAuth2 for authentication
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Environment variables via .env
+3. Configure environment variables:
+   Create a `.env` file in the root directory and add your MongoDB credentials:
+   ```env
+   DATABASE_USER=youruser
+   DATABASE_PASSWORD=yourpassword
+   PORT=3000
+   ```
+   > Note: The connection string in `db/database.js` expects these variables.
 
-Password hashing with bcrypt
+4. Start the server:
+   ```bash
+   npm start
+   ```
+   For development with auto-restart:
+   ```bash
+   npm run dev
+   ```
 
-Input validation and sanitization
+## API Documentation
+
+Once the server is running, visit **[http://localhost:3000/api-docs](http://localhost:3000/api-docs)** to explore and test the API endpoints using Swagger UI.
+
+### Key Endpoints
+
+#### Movies (`/movies`)
+- `GET /` - List all movies
+- `GET /:id` - Get a single movie by ID
+- `POST /` - Add a new movie
+- `PUT /:id` - Update a movie
+- `DELETE /:id` - Delete a movie
+
+#### Most Popular (`/most-popular`)
+- `GET /` - List most popular movies
+- `GET /:id` - Get a specific popular movie
+- `POST /` - Add to most popular
+- `PUT /:id` - Update a popular movie entry
+- `DELETE /:id` - Remove from most popular
