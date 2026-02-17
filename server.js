@@ -11,7 +11,6 @@ const MongoStore = mongoStoreFactory(session);
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.set('trust proxy', 1) // trust first proxy
 
 // Connect to DB before starting the session
 (async () => {
@@ -35,32 +34,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 app.use(session({
-    secret: process.env.SESSION_SECRET,   // ⚠️ CAMBIA ESTO en producción
-    resave: true,
-    saveUninitialized: false,
+    secret: 'keyboard cat',   // ⚠️ CAMBIA ESTO en producción
+    resave: false,
+    saveUninitialized: true,
     store: store,            // ✅ Tu store de MongoDB
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 14, // 14 días
         httpOnly: true,
         sameSite: 'lax',
-        secure: isProduction  // Set to true in production with HTTPS
+        secure: false  // Set to true in production with HTTPS
     }
 }));
 app.use(passport.initialize());
-app.use(passport.session());
-
-app.use((req, res, next) => {
-    console.log('=== SESSION DEBUG ===');
-    console.log('Session ID:', req.sessionID);
-    console.log('Session exists:', !!req.session);
-    console.log('User:', req.user ? 'YES' : 'NO');
-    console.log('Cookies:', req.headers.cookie);
-    console.log('===================');
-    next();
-});
+app.use(passport.authenticate('session'));
 
 app.use((req, res, next) => {
   // Only apply CORS to API routes, not OAuth routes

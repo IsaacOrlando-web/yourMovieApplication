@@ -3,7 +3,7 @@ var passport = require('passport');
 var router = express.Router();
 var GoogleStrategy = require('passport-google-oidc');
 var { getDatabase } = require('../db/database');
-const isProduction = process.env.NODE_ENV === 'production';
+z
 
 router.get('/logout', function(req, res, next) {
   req.logout(function(err) {
@@ -13,22 +13,33 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/oauth2/redirect/google', (req, res, next) => {
-  console.log('=== OAUTH CALLBACK ===');
-  console.log('Session ID:', req.sessionID);
-  console.log('Session content:', req.session);
-  console.log('State param:', req.query.state);
-  console.log('=====================');
-  
+  // Check for OAuth errors from Google
   if (req.query.error) {
-    console.error('Google OAuth Error:', req.query.error);
-    return res.redirect('/login?error=' + req.query.error);
+    console.error('Google OAuth Error:', {
+      error: req.query.error,
+      error_description: req.query.error_description,
+      error_uri: req.query.error_uri
+    });
+    return res.redirect('/login?error=' + encodeURIComponent(req.query.error) + '&error_description=' + encodeURIComponent(req.query.error_description || ''));
   }
   
-  // NO USES el callback personalizado aquí, deja que passport maneje todo
-  passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/login/federated/google',
-    failureMessage: true
+
+  passport.authenticate('google', (err, user, info) => {
+    if (err) {
+      console.error('OAuth Serialize Error:', err);
+      return res.redirect('/login?error=' + encodeURIComponent(err.message));
+    }
+    if (!user) {
+      console.error('OAuth User Not Found:', info);
+      return res.redirect('/login/federated/google?error=auth_failed');
+    }
+    req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        console.error('Login Error:', loginErr);
+        return res.redirect('/login?error=' + encodeURIComponent(loginErr.message));
+      }
+      return res.redirect('/');
+    });
   })(req, res, next);
 });
 
@@ -62,9 +73,7 @@ router.get('/login', (req, res) => {
 passport.use(new GoogleStrategy({
   clientID: process.env['GOOGLE_CLIENT_ID'],
   clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-  callbackURL: isProduction
-    ? 'https://yourmovieapplication.onrender.com/oauth2/redirect/google'
-    : '/oauth2/redirect/google',
+  callbackURL: '/oauth2/redirect/google',
   scope: ['profile', 'email']
 }, async function verify(issuer, profile, cb) {
   console.log('Google OAuth Verify - Issuer:', issuer);
