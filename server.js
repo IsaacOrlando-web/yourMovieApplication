@@ -39,16 +39,23 @@ const store = new MongoStore({
     client: client,
     dbName: 'yourMovies',
     collection: 'sessions',
-    ttlMs: 1000 * 60 * 60 * 24 * 14,
-    cleanupStrategy: 'native'
+    ttlMs: 1000 * 60 * 60 * 24 * 14, // 14 días
+    cleanupStrategy: 'native',
+    // AÑADE ESTAS OPCIONES:
+    autoRemove: 'native',
+    touchAfter: 24 * 3600, // Solo actualiza una vez al día si no hay cambios
+    crypto: {
+        secret: process.env.SESSION_SECRET // Encripta las sesiones
+    }
 });
 
-store.on('connect', () => {
-    console.log('✅ MongoStore conectado correctamente');
+// AÑADE ESTE EVENTO PARA VERIFICAR
+store.on('create', (sessionId) => {
+    console.log('✅ Sesión creada en MongoDB:', sessionId);
 });
 
-store.on('error', (error) => {
-    console.error('❌ MongoStore error:', error);
+store.on('touch', (sessionId) => {
+    console.log('👆 Sesión actualizada:', sessionId);
 });
 
 // Middlewares básicos
@@ -60,19 +67,21 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // Configuración de sesión CORREGIDA
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'keyboard cat', // Usa variable de entorno
-    resave: true,  // Cambiado a true para asegurar que se guarde
-    saveUninitialized: true, // Cambiado a true para crear sesiones nuevas
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
     store: store,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 14,
         httpOnly: true,
         sameSite: 'lax',
-        secure: isProduction, // true en producción, false en desarrollo
+        secure: isProduction,
         domain: isProduction ? '.yourmovieapplication.onrender.com' : undefined
-    }
+    },
+    name: 'sessionId',
+    rolling: true, // Renueva la cookie en cada request
+    unset: 'destroy' // Elimina la sesión si no se usa
 }));
-
 // Passport - ORDEN CORRECTO
 app.use(passport.initialize());
 app.use(passport.session()); // 👈 CAMBIADO: NO usar authenticate('session')
