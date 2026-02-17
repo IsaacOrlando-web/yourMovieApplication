@@ -38,8 +38,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(session({
     secret: process.env.SESSION_SECRET,   // ⚠️ CAMBIA ESTO en producción
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
     store: store,            // ✅ Tu store de MongoDB
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 14, // 14 días
