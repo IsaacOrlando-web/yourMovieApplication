@@ -5,8 +5,8 @@ const doc = {
         title: 'Movies API',
         description: 'A RESTful API for managing movie collections and most popular movies.'
     },
-    host: 'localhost:3000',
-    schemes: ['http', 'https']
+    host: 'yourmovieapplication.onrender.com',
+    schemes: ['https', 'http']
 };
 
 const outputFile = './swagger.json';
