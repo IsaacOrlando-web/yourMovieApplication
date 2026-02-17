@@ -3,7 +3,7 @@ var passport = require('passport');
 var router = express.Router();
 var GoogleStrategy = require('passport-google-oidc');
 var { getDatabase } = require('../db/database');
-
+const isProduction = process.env.NODE_ENV === 'production';
 
 router.get('/logout', function(req, res, next) {
   req.logout(function(err) {
@@ -73,7 +73,9 @@ router.get('/login', (req, res) => {
 passport.use(new GoogleStrategy({
   clientID: process.env['GOOGLE_CLIENT_ID'],
   clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-  callbackURL: '/oauth2/redirect/google',
+  callbackURL: isProduction
+    ? 'https://yourmovieapplication.onrender.com/oauth2/redirect/google'
+    : '/oauth2/redirect/google',
   scope: ['profile', 'email']
 }, async function verify(issuer, profile, cb) {
   console.log('Google OAuth Verify - Issuer:', issuer);

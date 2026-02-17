@@ -34,8 +34,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(session({
-    secret: 'keyboard cat',   // ⚠️ CAMBIA ESTO en producción
+    secret: process.env.SESSION_SECRET,   // ⚠️ CAMBIA ESTO en producción
     resave: false,
     saveUninitialized: true,
     store: store,            // ✅ Tu store de MongoDB
@@ -43,7 +45,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 14, // 14 días
         httpOnly: true,
         sameSite: 'lax',
-        secure: false  // Set to true in production with HTTPS
+        secure: isProduction  // Set to true in production with HTTPS
     }
 }));
 app.use(passport.initialize());

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1771303344670" clover="3.2.0">
-  <project timestamp="1771303344670" name="All files">
+<coverage generated="1771346347630" clover="3.2.0">
+  <project timestamp="1771346347630" name="All files">
     <metrics statements="264" coveredstatements="260" conditionals="89" coveredconditionals="89" methods="35" coveredmethods="35" elements="388" coveredelements="384" complexity="0" loc="264" ncloc="264" packages="2" files="5" classes="5"/>
     <package name="__tests__.helpers">
       <metrics statements="8" coveredstatements="8" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3"/>
-      <file name="mockDb.js" path="/Users/erikgerman/Documents/yourMovieApplication/__tests__/helpers/mockDb.js">
+      <file name="mockDb.js" path="C:\Users\Asus\Documents\programacion\web_services\teamProject\yourMovieApplication\__tests__\helpers\mockDb.js">
         <metrics statements="8" coveredstatements="8" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3"/>
         <line num="1" count="4" type="stmt"/>
         <line num="8" count="4" type="stmt"/>
@@ -18,7 +18,7 @@
     </package>
     <package name="controllers">
       <metrics statements="256" coveredstatements="252" conditionals="88" coveredconditionals="88" methods="32" coveredmethods="32"/>
-      <file name="commentsController.js" path="/Users/erikgerman/Documents/yourMovieApplication/controllers/commentsController.js">
+      <file name="commentsController.js" path="C:\Users\Asus\Documents\programacion\web_services\teamProject\yourMovieApplication\controllers\commentsController.js">
         <metrics statements="64" coveredstatements="63" conditionals="22" coveredconditionals="22" methods="8" coveredmethods="8"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -85,7 +85,7 @@
         <line num="145" count="1" type="stmt"/>
         <line num="149" count="1" type="stmt"/>
       </file>
-      <file name="mostPopularController.js" path="/Users/erikgerman/Documents/yourMovieApplication/controllers/mostPopularController.js">
+      <file name="mostPopularController.js" path="C:\Users\Asus\Documents\programacion\web_services\teamProject\yourMovieApplication\controllers\mostPopularController.js">
         <metrics statements="64" coveredstatements="63" conditionals="22" coveredconditionals="22" methods="8" coveredmethods="8"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -152,7 +152,7 @@
         <line num="169" count="1" type="stmt"/>
         <line num="173" count="1" type="stmt"/>
       </file>
-      <file name="moviesController.js" path="/Users/erikgerman/Documents/yourMovieApplication/controllers/moviesController.js">
+      <file name="moviesController.js" path="C:\Users\Asus\Documents\programacion\web_services\teamProject\yourMovieApplication\controllers\moviesController.js">
         <metrics statements="64" coveredstatements="63" conditionals="22" coveredconditionals="22" methods="8" coveredmethods="8"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -219,7 +219,7 @@
         <line num="167" count="1" type="stmt"/>
         <line num="171" count="1" type="stmt"/>
       </file>
-      <file name="usersController.js" path="/Users/erikgerman/Documents/yourMovieApplication/controllers/usersController.js">
+      <file name="usersController.js" path="C:\Users\Asus\Documents\programacion\web_services\teamProject\yourMovieApplication\controllers\usersController.js">
         <metrics statements="64" coveredstatements="63" conditionals="22" coveredconditionals="22" methods="8" coveredmethods="8"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>

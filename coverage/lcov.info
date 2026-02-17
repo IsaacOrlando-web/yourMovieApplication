@@ -1,5 +1,5 @@
 TN:
-SF:__tests__/helpers/mockDb.js
+SF:__tests__\helpers\mockDb.js
 FN:7,createMockCollection
 FN:25,createMockReqRes
 FN:45,validObjectId
@@ -23,7 +23,7 @@ BRF:1
 BRH:1
 end_of_record
 TN:
-SF:controllers/commentsController.js
+SF:controllers\commentsController.js
 FN:12,validateCommentBody
 FN:13,(anonymous_1)
 FN:19,isValidObjectId
@@ -134,7 +134,7 @@ BRF:22
 BRH:22
 end_of_record
 TN:
-SF:controllers/mostPopularController.js
+SF:controllers\mostPopularController.js
 FN:14,validatePopularBody
 FN:15,(anonymous_1)
 FN:21,isValidObjectId
@@ -245,7 +245,7 @@ BRF:22
 BRH:22
 end_of_record
 TN:
-SF:controllers/moviesController.js
+SF:controllers\moviesController.js
 FN:14,validateMovieBody
 FN:15,(anonymous_1)
 FN:21,isValidObjectId
@@ -356,7 +356,7 @@ BRF:22
 BRH:22
 end_of_record
 TN:
-SF:controllers/usersController.js
+SF:controllers\usersController.js
 FN:12,validateUserBody
 FN:13,(anonymous_1)
 FN:19,isValidObjectId
