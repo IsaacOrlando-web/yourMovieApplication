@@ -43,7 +43,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 14, // 14 días
         httpOnly: true,
         sameSite: 'lax',
-        secure: false  // Set to true in production with HTTPS
+        secure: true  // Set to true in production with HTTPS
     }
 }));
 app.use(passport.initialize());
