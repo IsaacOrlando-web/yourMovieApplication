@@ -3,7 +3,7 @@ var passport = require('passport');
 var router = express.Router();
 var GoogleStrategy = require('passport-google-oidc');
 var { getDatabase } = require('../db/database');
-z
+
 
 router.get('/logout', function(req, res, next) {
   req.logout(function(err) {
