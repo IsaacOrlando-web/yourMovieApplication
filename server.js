@@ -41,7 +41,7 @@ app.use(session({
     store: store,            // ✅ Tu store de MongoDB
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 14, // 14 días
-        httpOnly: true,
+        httpOnly: false,
         sameSite: 'lax',
         secure: true  // Set to true in production with HTTPS
     }
