@@ -4,6 +4,8 @@ var router = express.Router();
 var GoogleStrategy = require('passport-google-oidc');
 var { getDatabase } = require('../db/database');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // Middleware para asegurar que la sesión funciona
 router.use((req, res, next) => {
     console.log('📝 Auth route accessed:', req.path);
@@ -24,30 +26,46 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
-router.get('/oauth2/redirect/google', (req, res, next) => {
-  (req, res, next) => {
+// Ruta de callback CORREGIDA
+router.get('/oauth2/redirect/google', 
+    // Middleware 1: Logging
+    (req, res, next) => {
         console.log('🔄 Callback recibido de Google');
         console.log('  Session ID:', req.sessionID);
+        console.log('  Session content:', req.session);
         console.log('  Cookies:', req.headers.cookie);
         console.log('  Query params:', req.query);
+        console.log('  State recibido:', req.query.state);
         next();
     },
-    passport.authenticate('google', {
-        successRedirect: '/',
-        failureRedirect: '/login',
-        failureMessage: true,
-        failureFlash: true // Si usas flash messages
-    })
-});
+    // Middleware 2: Autenticación
+    (req, res, next) => {
+        passport.authenticate('google', {
+            successRedirect: '/',
+            failureRedirect: '/login',
+            failureMessage: true
+        })(req, res, next);
+    }
+);
 
 router.get('/login/federated/google', (req, res, next) => {
   console.log('Starting Google OAuth login...');
   console.log('Client ID:', process.env['GOOGLE_CLIENT_ID'] ? 'SET' : 'NOT SET');
   console.log('Client Secret:', process.env['GOOGLE_CLIENT_SECRET'] ? 'SET' : 'NOT SET');
+  console.log('Session before auth:', {
+    id: req.sessionID,
+    exists: !!req.session
+  });
   
-  passport.authenticate('google', {
-    scope: ['profile', 'email']
-  })(req, res, next);
+  // Guardar algo en sesión antes de auth
+  req.session.loginStart = Date.now();
+  req.session.save((err) => {
+    if (err) console.error('Error saving session:', err);
+    
+    passport.authenticate('google', {
+      scope: ['profile', 'email']
+    })(req, res, next);
+  });
 });
 
 // Login page with error handling
@@ -70,8 +88,7 @@ router.get('/login', (req, res) => {
 passport.use(new GoogleStrategy({
   clientID: process.env['GOOGLE_CLIENT_ID'],
   clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-  // En la estrategia de Google, asegúrate de tener:
-callbackURL: process.env.NODE_ENV === 'production' 
+  callbackURL: isProduction 
     ? 'https://yourmovieapplication.onrender.com/oauth2/redirect/google'
     : '/oauth2/redirect/google',
   scope: ['profile', 'email']
@@ -112,7 +129,6 @@ callbackURL: process.env.NODE_ENV === 'production'
         createdAt: new Date()
       });
       
-      // Devolver usuario creado
       const createdUser = {
         id: userId,
         name: newUser.name,
@@ -122,7 +138,6 @@ callbackURL: process.env.NODE_ENV === 'production'
       
       return cb(null, createdUser);
     } else {
-      // Buscar usuario existente
       const user = await usersCollection.findOne({
         _id: existingCredential.user_id
       });
@@ -131,7 +146,6 @@ callbackURL: process.env.NODE_ENV === 'production'
         return cb(null, false);
       }
       
-      // Devolver usuario existente
       const existingUser = {
         id: user._id,
         name: user.name,
@@ -142,17 +156,20 @@ callbackURL: process.env.NODE_ENV === 'production'
       return cb(null, existingUser);
     }
   } catch (error) {
+    console.error('Verify error:', error);
     return cb(error);
   }
 }));
 
 passport.serializeUser(function(user, cb) {
+  console.log('Serializing user:', user.id);
   process.nextTick(function() {
     cb(null, { id: user.id, name: user.name, email: user.email });
   });
 });
 
 passport.deserializeUser(function(user, cb) {
+  console.log('Deserializing user:', user.id);
   process.nextTick(function() {
     return cb(null, user);
   });
