@@ -5,11 +5,11 @@
     "description": "A RESTful API for managing movie collections and most popular movies.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "yourmovieapplication.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
     "/logout": {
@@ -27,17 +27,12 @@
         "description": "",
         "parameters": [
           {
-            "name": "error",
-            "in": "query",
+            "name": "cookie",
+            "in": "header",
             "type": "string"
           },
           {
-            "name": "error_description",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "error_uri",
+            "name": "state",
             "in": "query",
             "type": "string"
           }
