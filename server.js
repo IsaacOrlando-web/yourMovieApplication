@@ -43,6 +43,14 @@ const store = new MongoStore({
     cleanupStrategy: 'native'
 });
 
+store.on('connect', () => {
+    console.log('✅ MongoStore conectado correctamente');
+});
+
+store.on('error', (error) => {
+    console.error('❌ MongoStore error:', error);
+});
+
 // Middlewares básicos
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

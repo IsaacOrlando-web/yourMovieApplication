@@ -4,6 +4,18 @@ var router = express.Router();
 var GoogleStrategy = require('passport-google-oidc');
 var { getDatabase } = require('../db/database');
 
+// Middleware para asegurar que la sesión funciona
+router.use((req, res, next) => {
+    console.log('📝 Auth route accessed:', req.path);
+    console.log('  Session exists:', !!req.session);
+    console.log('  Session ID:', req.sessionID);
+    console.log('  User:', req.user ? 'YES' : 'NO');
+    
+    if (!req.session) {
+        console.error('❌ No session found!');
+    }
+    next();
+});
 
 router.get('/logout', function(req, res, next) {
   req.logout(function(err) {
@@ -13,34 +25,19 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/oauth2/redirect/google', (req, res, next) => {
-  // Check for OAuth errors from Google
-  if (req.query.error) {
-    console.error('Google OAuth Error:', {
-      error: req.query.error,
-      error_description: req.query.error_description,
-      error_uri: req.query.error_uri
-    });
-    return res.redirect('/login?error=' + encodeURIComponent(req.query.error) + '&error_description=' + encodeURIComponent(req.query.error_description || ''));
-  }
-  
-
-  passport.authenticate('google', (err, user, info) => {
-    if (err) {
-      console.error('OAuth Serialize Error:', err);
-      return res.redirect('/login?error=' + encodeURIComponent(err.message));
-    }
-    if (!user) {
-      console.error('OAuth User Not Found:', info);
-      return res.redirect('/login/federated/google?error=auth_failed');
-    }
-    req.logIn(user, (loginErr) => {
-      if (loginErr) {
-        console.error('Login Error:', loginErr);
-        return res.redirect('/login?error=' + encodeURIComponent(loginErr.message));
-      }
-      return res.redirect('/');
-    });
-  })(req, res, next);
+  (req, res, next) => {
+        console.log('🔄 Callback recibido de Google');
+        console.log('  Session ID:', req.sessionID);
+        console.log('  Cookies:', req.headers.cookie);
+        console.log('  Query params:', req.query);
+        next();
+    },
+    passport.authenticate('google', {
+        successRedirect: '/',
+        failureRedirect: '/login',
+        failureMessage: true,
+        failureFlash: true // Si usas flash messages
+    })
 });
 
 router.get('/login/federated/google', (req, res, next) => {
