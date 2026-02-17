@@ -11,6 +11,7 @@ const MongoStore = mongoStoreFactory(session);
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.set('trust proxy', 1) // trust first proxy
 
 // Connect to DB before starting the session
 (async () => {
@@ -49,7 +50,17 @@ app.use(session({
     }
 }));
 app.use(passport.initialize());
-app.use(passport.authenticate('session'));
+app.use(passport.session());
+
+app.use((req, res, next) => {
+    console.log('=== SESSION DEBUG ===');
+    console.log('Session ID:', req.sessionID);
+    console.log('Session exists:', !!req.session);
+    console.log('User:', req.user ? 'YES' : 'NO');
+    console.log('Cookies:', req.headers.cookie);
+    console.log('===================');
+    next();
+});
 
 app.use((req, res, next) => {
   // Only apply CORS to API routes, not OAuth routes

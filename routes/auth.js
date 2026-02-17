@@ -13,33 +13,22 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/oauth2/redirect/google', (req, res, next) => {
-  // Check for OAuth errors from Google
+  console.log('=== OAUTH CALLBACK ===');
+  console.log('Session ID:', req.sessionID);
+  console.log('Session content:', req.session);
+  console.log('State param:', req.query.state);
+  console.log('=====================');
+  
   if (req.query.error) {
-    console.error('Google OAuth Error:', {
-      error: req.query.error,
-      error_description: req.query.error_description,
-      error_uri: req.query.error_uri
-    });
-    return res.redirect('/login?error=' + encodeURIComponent(req.query.error) + '&error_description=' + encodeURIComponent(req.query.error_description || ''));
+    console.error('Google OAuth Error:', req.query.error);
+    return res.redirect('/login?error=' + req.query.error);
   }
   
-
-  passport.authenticate('google', (err, user, info) => {
-    if (err) {
-      console.error('OAuth Serialize Error:', err);
-      return res.redirect('/login?error=' + encodeURIComponent(err.message));
-    }
-    if (!user) {
-      console.error('OAuth User Not Found:', info);
-      return res.redirect('/login/federated/google?error=auth_failed');
-    }
-    req.logIn(user, (loginErr) => {
-      if (loginErr) {
-        console.error('Login Error:', loginErr);
-        return res.redirect('/login?error=' + encodeURIComponent(loginErr.message));
-      }
-      return res.redirect('/');
-    });
+  // NO USES el callback personalizado aquí, deja que passport maneje todo
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/login/federated/google',
+    failureMessage: true
   })(req, res, next);
 });
 
