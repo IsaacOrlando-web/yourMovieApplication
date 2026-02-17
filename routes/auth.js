@@ -73,7 +73,10 @@ router.get('/login', (req, res) => {
 passport.use(new GoogleStrategy({
   clientID: process.env['GOOGLE_CLIENT_ID'],
   clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-  callbackURL: '/oauth2/redirect/google',
+  // En la estrategia de Google, asegúrate de tener:
+callbackURL: process.env.NODE_ENV === 'production' 
+    ? 'https://yourmovieapplication.onrender.com/oauth2/redirect/google'
+    : '/oauth2/redirect/google',
   scope: ['profile', 'email']
 }, async function verify(issuer, profile, cb) {
   console.log('Google OAuth Verify - Issuer:', issuer);
